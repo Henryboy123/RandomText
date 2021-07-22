@@ -2,21 +2,13 @@ var express = require("express");
 var path = require("path");  
 var fs = require("fs");  
 var  morgan = require("morgan");
+var staticPath = path.join(__dirname, "static");
 
 var app = express();  
 
 app.use(morgan("short"));
+app.use(express.static(staticPath));
 
-app.use(function(req, res, next) { 
-var filePath = path.join(__dirname, "static", req.url);  
-fs.exists(filePath, function(exists) {  
-    if (exists) {  
-        res.sendFile(filePath);  
-    } else {  
-            next();  
-        } 
-    }); 
-}); 
 
 app.use(function(req,res){
     res.status(404);
